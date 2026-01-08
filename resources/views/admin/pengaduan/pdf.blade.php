@@ -11,24 +11,6 @@
             line-height: 1.5;
         }
 
-        .kop {
-            text-align: center;
-            border-bottom: 2px solid #000;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        .kop h1, .kop h2 {
-            margin: 0;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .kop p {
-            margin: 2px 0;
-            font-size: 10px;
-        }
-
         h3 {
             text-align: center;
             margin: 20px 0;
@@ -72,14 +54,32 @@
 </head>
 <body>
 
-    <!-- KOP SURAT -->
-    <div class="kop">
-        <h1>KEMENTERIAN PELINDUNGAN PEKERJA MIGRAN INDONESIA</h1>
-        <h2>BADAN PELINDUNGAN PEKERJA MIGRAN INDONESIA</h2>
-        <p><strong>DIREKTORAT JENDERAL PELINDUNGAN</strong></p>
-        <p>Jl. MT. Haryono Kav. 52 Cikoko, Jakarta Selatan 12770</p>
-        <p>Telp. (021) 79197321 | Web: www.bp2mi.go.id</p>
-    </div>
+    <!-- ================= KOP SURAT DENGAN LOGO ================= -->
+    <table width="100%" style="border-bottom:2px solid #000; padding-bottom:10px; margin-bottom:20px;">
+        <tr>
+            <td width="15%" align="center">
+                <img src="{{ public_path('images/logo-bp2mi.png') }}" width="80">
+            </td>
+            <td width="85%" align="center">
+                <div style="font-size:14px; font-weight:bold;">
+                    KEMENTERIAN PELINDUNGAN PEKERJA MIGRAN INDONESIA
+                </div>
+                <div style="font-size:13px; font-weight:bold;">
+                    BADAN PELINDUNGAN PEKERJA MIGRAN INDONESIA
+                </div>
+                <div style="font-size:11px; font-weight:bold;">
+                    DIREKTORAT JENDERAL PELINDUNGAN
+                </div>
+                <div style="font-size:10px;">
+                    Jl. MT. Haryono Kav. 52 Cikoko, Jakarta Selatan 12770
+                </div>
+                <div style="font-size:10px;">
+                    Telp. (021) 79197321 | Web: www.bp2mi.go.id
+                </div>
+            </td>
+        </tr>
+    </table>
+    <!-- ========================================================= -->
 
     <!-- JUDUL -->
     <h3>DETAIL PENGADUAN</h3>
