@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.form-input {
+    @apply w-full border rounded px-3 py-2 focus:ring focus:ring-blue-200;
+}
+
+.form-textarea {
+    @apply w-full border rounded px-3 py-2 h-28 focus:ring focus:ring-blue-200;
+}
