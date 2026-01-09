@@ -3,7 +3,6 @@
 @section('title', 'Sistem Pengaduan PMI | KP2MI')
 
 @section('content')
-<section class="bg-yellow-400 min-h-[calc(100vh-140px)] flex items-center">
     <div class="max-w-7xl mx-auto px-6 py-20
                 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 

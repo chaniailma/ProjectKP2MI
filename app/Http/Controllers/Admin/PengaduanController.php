@@ -61,9 +61,17 @@ public function show($id)
             'tuntutan' => 'nullable|string',
             'kategori_pengaduan' => 'nullable|string',
             'penjelasan_pengaduan' => 'nullable|string',
+            'dokumen_pendukung' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             
             
         ]);
+                if ($request->hasFile('dokumen_pendukung')) {
+            $file = $request->file('dokumen_pendukung');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->storeAs('public/uploads', $filename);
+            $pengaduan->dokumen_pendukung = 'uploads/'.$filename;
+        }
+                    $pengaduan->save();
 
         Pengaduan::create($data);
         
