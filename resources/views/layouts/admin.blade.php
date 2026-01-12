@@ -2,7 +2,10 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'Dasboard Admin')</title>
+    <title>@yield('title', 'Dashboard Admin')</title>
+
+    <!-- CSS COMPACT -->
+    <link rel="stylesheet" href="{{ asset('css/admin-compact.css') }}">
 
     <style>
         body {
@@ -10,20 +13,25 @@
             font-family: Arial, sans-serif;
             background: #f4f6f8;
             height: 100vh;
+            overflow: hidden;
         }
 
         .wrapper {
             display: flex;
-            min-height: 100vh;
+            height: 100vh;
         }
 
         /* ================= SIDEBAR ================= */
         .sidebar {
             width: 260px;
-            display: flex;
-            flex-direction: column;
             background: #06246b;
             color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
         }
 
         .sidebar-header {
@@ -42,27 +50,26 @@
             font-size: 15px;
             line-height: 1.4;
             font-weight: bold;
-            color: #ffffff;
         }
 
         .sidebar-header small {
             color: #c7d2fe;
-            font-weight: normal;
         }
 
         .sidebar-menu {
             flex: 1;
             padding: 15px;
+            overflow-y: auto;
         }
 
         .sidebar-menu a {
             display: block;
             color: #ffffff;
             text-decoration: none;
-            padding: 12px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .sidebar-menu a:hover {
@@ -74,43 +81,42 @@
             font-size: 12px;
             text-align: center;
             border-top: 1px solid rgba(255,255,255,0.2);
-            color: #e5e7eb;
         }
 
         .sidebar-footer button {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             background: #dc2626;
             border: none;
             color: white;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 13px;
-            margin-top: 6px;
+            font-size: 12px;
         }
 
         /* ================= MAIN ================= */
         .main {
+            margin-left: 260px;
             flex: 1;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            height: 100vh;
         }
 
-        /* HEADER */
+        /* HEADER FIXED */
         .header {
-            background: white;
-            padding: 15px 25px;
+            position: fixed;
+            top: 0;
+            left: 260px;
+            right: 0;
+            height: 60px;
+            background: #ffffff;
             border-bottom: 1px solid #e5e7eb;
             display: flex;
+            justify-content: flex-end;
             align-items: center;
-            justify-content: space-between;
-        }
-
-        .header h2 {
-            margin: 0;
-            font-size: 18px;
-            color: #1e293b;
+            padding: 0 20px;
+            z-index: 100;
         }
 
         .search-form {
@@ -119,27 +125,30 @@
         }
 
         .search-form input {
-            padding: 8px 12px;
+            padding: 6px 10px;
             border: 1px solid #cbd5e1;
             border-radius: 6px;
-            font-size: 14px;
-            width: 220px;
+            font-size: 12px;
+            width: 180px;
         }
 
         .search-form button {
-            padding: 8px 15px;
+            padding: 6px 12px;
             background: #06246b;
             border: none;
             color: white;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
         }
 
-        /* CONTENT */
+        /* CONTENT SCROLL */
         .content {
-            padding: 25px;
-            flex: 1; /* agar konten mengisi sisa ruang, mendorong footer ke bawah */
+            margin-top: 60px;
+            margin-bottom: 60px;
+            padding: 15px;
+            overflow-y: auto;
+            height: calc(100vh - 120px);
         }
 
         table {
@@ -148,33 +157,33 @@
             background: white;
         }
 
-        table th{
-            border: 1px solid #dddddd;
-            padding: 10px;
-            font-size: 14px;
-            color: #f8f9fa;
-            text-align: center;
-        
-        
-        }
+        table th,
         table td {
             border: 1px solid #dddddd;
-            padding: 10px;
-            font-size: 14px;
-            color: #1e293b;
+            padding: 8px;
+            font-size: 12px;
             text-align: center;
         }
 
         table th {
             background: #06246b;
+            color: #ffffff;
         }
 
-        /* ================= FOOTER ================= */
+        /* FOOTER FIXED */
         footer {
-            background-color: rgb(215, 185, 15); /* warna kotak gold */
-            text-align: center;
-            padding: 27px;
+            position: fixed;
+            bottom: 0;
+            left: 260px;
+            right: 0;
+            height: 60px;
+            background-color: rgb(215, 185, 15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: bold;
+            font-size: 12px;
+            z-index: 100;
         }
     </style>
 </head>
@@ -184,7 +193,6 @@
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
-
         <div class="sidebar-header">
             <img src="{{ asset('logo.png') }}" alt="Logo">
             <h3>
@@ -196,9 +204,6 @@
         <div class="sidebar-menu">
             <a href="{{ route('admin.dashboard') }}">📊 Dashboard</a>
             <a href="{{ route('admin.pengaduan.index') }}">📄 List Pengaduan</a>
-             <!-- QR PENGADUAN -->
-    
-    </nav>
         </div>
 
         <div class="sidebar-footer">
@@ -207,7 +212,6 @@
                 <button type="submit">Logout</button>
             </form>
         </div>
-
     </aside>
 
     <!-- MAIN -->
@@ -215,15 +219,8 @@
 
         <!-- HEADER -->
         <div class="header">
-    
-
             <form class="search-form" method="GET" action="{{ route('admin.pengaduan.index') }}">
-                <input
-                    type="text"
-                    name="search"
-                    placeholder="Cari Nama PMI..."
-                    value="{{ request('search') }}"
-                >
+                <input type="text" name="search" placeholder="Cari Nama PMI..." value="{{ request('search') }}">
                 <button type="submit">Search</button>
             </form>
         </div>
@@ -243,4 +240,10 @@
 </div>
 
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+@yield('script')
 </html>

@@ -1,0 +1,111 @@
+/* =========================
+   CRISIS CENTER COMPACT UI
+   ========================= */
+
+/* GLOBAL */
+body {
+    font-size: 12.5px;
+    background-color: #f4f6f9;
+}
+
+.container-fluid {
+    padding: 12px !important;
+}
+
+/* HEADINGS */
+h1 { font-size: 20px; font-weight: 600; }
+h2 { font-size: 17px; font-weight: 600; }
+h3 { font-size: 15px; font-weight: 600; }
+h4, h5 { font-size: 14px; font-weight: 600; }
+
+p, small {
+    font-size: 12px;
+}
+
+/* CARD */
+.card {
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+}
+
+.card-body {
+    padding: 10px 12px;
+}
+
+.card-title {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* SUMMARY CARD */
+.summary-number {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.summary-label {
+    font-size: 11px;
+    color: #6b7280;
+}
+
+/* FORM */
+.form-select,
+.form-control {
+    font-size: 12px;
+    padding: 4px 8px;
+    height: auto;
+}
+
+.btn {
+    font-size: 12px;
+    padding: 4px 10px;
+}
+
+.btn-warning {
+    background-color: #f59e0b;
+    border-color: #f59e0b;
+}
+
+/* TABLE */
+.table th,
+.table td {
+    font-size: 12px;
+    padding: 6px 8px;
+}
+
+/* PROGRESS */
+.progress {
+    height: 6px;
+}
+
+/* CHART */
+canvas {
+    max-height: 140px !important;
+}
+
+/* FLAG */
+.flag {
+    height: 16px;
+    border-radius: 2px;
+}
+
+/* GRID RAPAT */
+.row {
+    margin-left: -6px;
+    margin-right: -6px;
+}
+
+.row > * {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 13px;
+}
