@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ route('pengaduan.store') }}">
+        <form method="POST" action="{{ route('admin.pengaduan.store') }}">
             @csrf
 
             {{-- ================= TANGGAL ================= --}}
@@ -136,6 +136,7 @@
                             <option>SMA</option>
                             <option>Diploma</option>
                             <option>Sarjana</option>
+                            <option>UNKNOW</option>
                         </select>
                     </div>
                 </div>
@@ -991,105 +992,23 @@
         {{-- KLASIFIKASI --}}
         <div class="md:col-span-1">
             <label class="text-sm font-medium">
-                Klasifikasi Pengaduan <span class="text-red-500">*</span>
+                Kategori Pengaduan <span class="text-red-500">*</span>
             </label>
         </div>
 
 <div class="md:col-span-3">
-    <select name="klasifikasi_pengaduan" id="klasifikasi_pengaduan" class="form-input" required>
-        <option value="">-- Silahkan Pilih --</option>
+    <select name="klasifikasi_pengaduan" class="form-control" required>
+    <option value="">-- Pilih Klasifikasi --</option>
+    @foreach ($klasifikasi as $item)
+        <option value="{{ $item->id }}">
+            {{ $item->nama }}
+        </option>
+    @endforeach
+</select>
 
-        <option value="1">PMI gagal berangkat</option>
-        <option value="2">Penipuan peluang kerja</option>
-        <option value="3">Pemalsuan dokumen (KTP, Ijazah, Umur, Ijin orang tua)</option>
-        <option value="4">Ilegal Rekrut calon PMI</option>
-        <option value="5">Perlakuan tidak manusiawi di penampungan termasuk pelecehan</option>
-        <option value="6">Tidak boleh berkomunikasi</option>
-        <option value="7">Biaya penempatan melebihi struktur biaya</option>
-        <option value="8">PMI berada pada penampungan ilegal</option>
-        <option value="9">PMI tidak diasuransikan</option>
-        <option value="10">PMI sakit di penampungan</option>
-        <option value="11">PMI meninggal dalam proses pra penempatan</option>
-        <option value="12">Utang piutang antara CPMI dan P3MI</option>
-        <option value="13">Gaji tidak dibayar</option>
-        <option value="14">Potongan gaji melebihi ketentuan</option>
-        <option value="15">Putus Hubungan Komunikasi</option>
-        <option value="16">Pelecehan seksual</option>
-        <option value="17">Pekerjaan tidak sesuai PK</option>
-        <option value="18">Tindak kekerasan dari majikan</option>
-        <option value="19">Unfit (pemalsuan sertifikat kesehatan atau tidak dilakukan pemeriksaan kesehatan)</option>
-        <option value="20">Pemutusan hubungan kerja sebelum masa PK berakhir</option>
-        <option value="21">PMI mengalami kecelakaan</option>
-        <option value="22">Meninggal dunia di negara tujuan</option>
-        <option value="23">PMI tidak berdokumen</option>
-        <option value="24">PMI tidak mampu bekerja</option>
-        <option value="25">PMI melanggar peraturan dan tradisi</option>
-        <option value="26">PMI hamil dan memiliki anak</option>
-        <option value="27">PMI dalam tahanan/proses tahanan</option>
-        <option value="28">PMI sakit/rawat inap</option>
-        <option value="29">PMI tidak harmonis dengan pengguna</option>
-        <option value="30">Lari dari majikan (Saudi)</option>
-        <option value="31">Menyalahi ijin kerja (Aspac)</option>
-        <option value="32">Gaji di bawah standar</option>
-        <option value="33">Kecelakaan</option>
-        <option value="34">Sakit</option>
-        <option value="35">Depresi / Sakit jiwa</option>
-        <option value="36">Meninggal</option>
-        <option value="37">Pemerasan / tindakan kriminal</option>
-        <option value="38">PMI hamil</option>
-        <option value="39">PMI membawa anak</option>
-        <option value="40">PMI tidak punya ongkos pulang</option>
-        <option value="41">Alamat rumah berbeda dengan paspor</option>
-        <option value="42">Penahanan paspor/dokumen oleh P3MI</option>
-        <option value="63">Gagal Penempatan</option>
-        <option value="64">PMI Ingin Dipulangkan</option>
-        <option value="65">Overstay</option>
-        <option value="66">Penyalahgunaan Izin Tinggal</option>
-        <option value="67">Asuransi luar negeri belum dibayar</option>
-        <option value="68">Beban kerja terlalu berat</option>
-        <option value="69">Dipekerjakan lebih dari 1 majikan</option>
-        <option value="70">Kurang waktu Istirahat</option>
-        <option value="71">Majikan cerewet</option>
-        <option value="72">Majikan stress</option>
-        <option value="73">Melarikan diri dari rumah majikan</option>
-        <option value="74">Tidak Betah</option>
-        <option value="75">Tidak dipulangkan meski kontrak selesai</option>
-        <option value="76">Dipekerjakan dibawah umur</option>
-        <option value="77">Kecelakaan lalu lintas</option>
-        <option value="78">Kepemilikan senjata api</option>
-        <option value="79">Korban penembakan</option>
-        <option value="80">Kriminalitas lainnya</option>
-        <option value="81">Pelecehan seksual</option>
-        <option value="82">Pembajakan kapal</option>
-        <option value="83">Pembunuhan</option>
-        <option value="84">Pencabulan anak</option>
-        <option value="85">Penculikan</option>
-        <option value="86">Pencurian</option>
-        <option value="87">Penipuan</option>
-        <option value="88">Penyanderaan</option>
-        <option value="89">Penyelundupan barang</option>
-        <option value="90">Penyelundupan orang</option>
-        <option value="91">Perampokan</option>
-        <option value="92">Perjudian</option>
-        <option value="93">Perkelahian</option>
-        <option value="94">Perkosaan</option>
-        <option value="95">Prostitusi</option>
-        <option value="96">Sihir</option>
-        <option value="97">Terorisme</option>
-        <option value="98">Perdagangan orang</option>
-        <option value="99">Zina</option>
-        <option value="100">Hutang piutang</option>
-        <option value="101">Perceraian</option>
-        <option value="102">Perebutan hak asuh</option>
-        <option value="103">Bencana alam</option>
-        <option value="104">Kerusuhan politik</option>
-        <option value="105">Konflik bersenjata</option>
-        <option value="106">Wabah penyakit</option>
-        <option value="107">Lain-lain</option>
-        <option value="108">Deportasi / Repatriasi</option>
-        <option value="109">Jaminan Sosial PMI</option>
-    </select>
 </div>
+
+       
         {{-- DESKRIPSI --}}
         <div class="md:col-span-1">
             <label class="text-sm font-medium">Deskripsi Permasalahan</label>
@@ -1130,9 +1049,11 @@
 
             {{-- ================= ACTION ================= --}}
             <div class="flex justify-between border-t pt-6">
-                <a href="{{ url('/') }}" class="px-6 py-2 border rounded">
-                    ← Kembali
-                </a>
+<a href="{{ route('admin.pengaduan.index') }}"
+   class="px-6 py-2 border rounded">
+    ← Kembali
+</a>
+
                 <button type="submit"
                         class="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800">
                     Kirim Pengaduan

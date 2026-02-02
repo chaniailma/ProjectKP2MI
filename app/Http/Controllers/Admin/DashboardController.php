@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Pengaduan;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -23,12 +23,10 @@ class DashboardController extends Controller
             $query->whereYear('created_at', $tahun);
         }
 
-        $total = $query->count();
-
-        // STATUS: 0=Baru, 1=Proses, 2=Selesai
-        $baru    = (clone $query)->where('status_pengaduan', 0)->count();
-        $proses  = (clone $query)->where('status_pengaduan', 1)->count();
-        $selesai = (clone $query)->where('status_pengaduan', 2)->count();
+        $total   = $query->count();
+        $baru    = (clone $query)->where('status_pengaduan', 'Terima Pengaduan')->count();
+        $proses  = (clone $query)->where('status_pengaduan', 'Proses')->count();
+        $selesai = (clone $query)->where('status_pengaduan', 'Selesai')->count();
 
         $provinsi = (clone $query)
             ->selectRaw('provinsi, COUNT(*) as total')
@@ -52,15 +50,9 @@ class DashboardController extends Controller
             ->get();
 
         return view('admin.dashboard', compact(
-            'total',
-            'baru',
-            'proses',
-            'selesai',
-            'provinsi',
-            'kabupaten',
-            'negara',
-            'bulan',
-            'tahun'
+            'total','baru','proses','selesai',
+            'provinsi','kabupaten','negara',
+            'bulan','tahun'
         ));
     }
 }

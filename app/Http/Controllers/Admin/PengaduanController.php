@@ -5,44 +5,75 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Pengaduan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Klasifikasi;
 
 class PengaduanController extends Controller
 {
     /**
-     * TAMPIL LIST PENGADUAN
+     * LIST DATA
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pengaduans = Pengaduan::latest()->get();
+        $pengaduans = Pengaduan::when($request->search, function ($query) use ($request) {
+                $query->where('nama_pmi', 'like', '%'.$request->search.'%')
+                      ->orWhere('nik', 'like', '%'.$request->search.'%')
+                      ->orWhere('negara_penempatan', 'like', '%'.$request->search.'%');
+            })
+            ->latest()
+            ->paginate(5);
 
         return view('admin.pengaduan.index', compact('pengaduans'));
     }
 
-    /**
-     * FORM TAMBAH
-     */
-    public function create()
+   // FORM UBAH STATUS
+public function editStatus($id)
+{
+    $pengaduan = Pengaduan::findOrFail($id);
+    return view('admin.pengaduan.status', compact('pengaduan'));
+}
+
+// SIMPAN STATUS + ADMIN
+public function updateStatus(Request $request, $id)
+{
+    $request->validate([
+        'status_pengaduan' => 'required|in:belum,diproses,selesai',
+    ]);
+
+    $pengaduan = Pengaduan::findOrFail($id);
+
+    $pengaduan->status_pengaduan = $request->status_pengaduan;
+    $pengaduan->processed_by = Auth::id(); // siapa admin yang ubah
+    $pengaduan->save();
+
+    return redirect()->back()->with('success', 'Status pengaduan berhasil diperbarui.');
+}
+
+ public function show($id)
     {
-        return view('admin.pengaduan.create');
+        $pengaduan = Pengaduan::findOrFail($id);
+        return view('admin.pengaduan.show', compact('pengaduan'));
     }
 
-    /**
-     * SIMPAN DATA
-     */
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'nama_pmi' => 'required|string|max:255',
-            'nik' => 'required|string|max:50',
-            'negara_penempatan' => 'nullable|string',
-        ]);
+   public function store(Request $request)
+{
+    Pengaduan::create($request->except('_token'));
 
-        Pengaduan::create($data);
+    return redirect()
+        ->route('admin.pengaduan.index')
+        ->with('success', 'Pengaduan berhasil disimpan');
+}
 
-        return redirect()
-            ->route('admin.pengaduan.index')
-            ->with('success', 'Data pengaduan berhasil ditambahkan');
-    }
+
+
+public function create()
+{
+    $klasifikasi = Klasifikasi::all();
+    return view('admin.pengaduan.create', compact('klasifikasi'));
+}
+
+    
 
     /**
      * FORM EDIT
@@ -50,7 +81,6 @@ class PengaduanController extends Controller
     public function edit($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
-
         return view('admin.pengaduan.edit', compact('pengaduan'));
     }
 
@@ -60,28 +90,11 @@ class PengaduanController extends Controller
     public function update(Request $request, $id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
-
-        $data = $request->validate([
-            'nama_pmi' => 'required|string|max:255',
-            'nik' => 'required|string|max:50',
-            'negara_penempatan' => 'nullable|string',
-        ]);
-
-        $pengaduan->update($data);
+        $pengaduan->update($request->all());
 
         return redirect()
             ->route('admin.pengaduan.index')
-            ->with('success', 'Data pengaduan berhasil diperbarui');
-    }
-
-    /**
-     * DETAIL
-     */
-    public function show($id)
-    {
-        $pengaduan = Pengaduan::findOrFail($id);
-
-        return view('admin.pengaduan.show', compact('pengaduan'));
+            ->with('success', 'Pengaduan diperbarui');
     }
 
     /**
@@ -90,9 +103,25 @@ class PengaduanController extends Controller
     public function destroy($id)
     {
         Pengaduan::findOrFail($id)->delete();
-
-        return redirect()
-            ->route('admin.pengaduan.index')
-            ->with('success', 'Data pengaduan berhasil dihapus');
+        return back()->with('success', 'Data berhasil dihapus');
     }
+
+    /**
+     * CETAK PDF
+     */
+   public function downloadPdf($id)
+{
+    $pengaduan = Pengaduan::findOrFail($id);
+
+    // admin yang download (akun login)
+    $admin = Auth::user();
+
+    $pdf = Pdf::loadView('admin.pengaduan.pdf', [
+        'pengaduan' => $pengaduan,
+        'admin' => $admin,
+    ]);
+
+    return $pdf->stream('pengaduan-'.$pengaduan->id.'.pdf');
+}
+    
 }

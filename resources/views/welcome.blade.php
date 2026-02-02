@@ -7,7 +7,7 @@
                 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
         <div>
-            <h1 class="text-3xl lg:text-4xl font-bold mb-4 text-blue-900">
+            <h1 class="text-3xl lg:text-4xl font-extrabold mb-4 text-blue-900">
                 Sistem Pengaduan<br>Pekerja Migran Indonesia
             </h1>
 
@@ -18,7 +18,7 @@
             </p>
 
             <a href="{{ route('pengaduan.create') }}"
-               class="inline-block px-6 py-3 bg-blue-900 text-yellow-400 rounded
+               class="inline-block px-6 py-3 bg-blue-900 text-white rounded
                       hover:bg-blue-800 transition font-semibold shadow">
                 Daftar Pengaduan
             </a>
